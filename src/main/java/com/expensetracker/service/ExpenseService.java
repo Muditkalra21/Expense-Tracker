@@ -1,9 +1,11 @@
 package com.expensetracker.service;
 
 import com.expensetracker.dto.ExpenseDto;
+import com.expensetracker.entity.Company;
 import com.expensetracker.entity.Expense;
 import com.expensetracker.entity.User;
 import com.expensetracker.entity.UserCompany;
+import com.expensetracker.repository.CompanyRepository;
 import com.expensetracker.repository.ExpenseRepository;
 import com.expensetracker.repository.UserCompanyRepository;
 import com.expensetracker.repository.UserRepository;
@@ -24,11 +26,21 @@ public class ExpenseService {
     private UserRepository userRepository;
 
     @Autowired
+    private CompanyRepository companyRepository;
+
+    @Autowired
     private UserCompanyRepository userCompanyRepository;
 
     public ExpenseDto createExpense(ExpenseDto expenseDto, String username) {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
-        UserCompany userCompany = userCompanyRepository.findByUserId(user.getId()).stream().findFirst().orElseThrow(() -> new RuntimeException("User not associated with any company"));
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        
+        Company company = companyRepository.findById(expenseDto.getCompanyId())
+                .orElseThrow(() -> new RuntimeException("Company not found"));
+        
+        // Verify user is associated with this company
+        UserCompany userCompany = userCompanyRepository.findByUserIdAndCompanyId(user.getId(), company.getId())
+                .orElseThrow(() -> new RuntimeException("User is not associated with this company"));
 
         Expense expense = new Expense();
         expense.setDescription(expenseDto.getDescription());
@@ -36,8 +48,9 @@ public class ExpenseService {
         expense.setCategory(expenseDto.getCategory());
         expense.setDate(expenseDto.getDate());
         expense.setUser(user);
-        expense.setCompany(userCompany.getCompany());
+        expense.setCompany(company);
         expense.setCreatedAt(LocalDateTime.now());
+        
         expense = expenseRepository.save(expense);
         return convertToDto(expense);
     }
@@ -51,8 +64,12 @@ public class ExpenseService {
     }
 
     public List<ExpenseDto> getExpensesByUser(String username) {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
-        return expenseRepository.findByUserId(user.getId()).stream().map(this::convertToDto).collect(Collectors.toList());
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return expenseRepository.findByUserId(user.getId())
+                .stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     public List<ExpenseDto> getExpensesByCompany(String username) {
@@ -91,6 +108,8 @@ public class ExpenseService {
         dto.setDate(expense.getDate());
         dto.setUserId(expense.getUser().getId());
         dto.setCompanyId(expense.getCompany().getId());
+        dto.setCompanyName(expense.getCompany().getName());  // Add this line
+        dto.setStatus(expense.getStatus().toString());       // Add this line
         return dto;
     }
 }

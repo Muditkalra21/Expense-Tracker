@@ -29,6 +29,8 @@ public class ExpenseController {
     public ResponseEntity<ExpenseDto> getExpenseById(@PathVariable Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
+        
+        // Verify the expense belongs to the current user or user has access to the company
         ExpenseDto expense = expenseService.getExpenseById(id, username);
         return ResponseEntity.ok(expense);
     }

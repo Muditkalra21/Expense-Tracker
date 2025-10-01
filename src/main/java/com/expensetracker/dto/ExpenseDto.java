@@ -11,6 +11,8 @@ public class ExpenseDto {
     private String category;
     private Long userId;
     private Long companyId;
+    private String companyName;  // Add this field
+    private String status;       // Add this field
 
     public Long getId() {
         return id;
@@ -66,5 +68,21 @@ public class ExpenseDto {
 
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -6,29 +6,39 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "expenses")
+@Table(name = "EXPENSES")
 public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
+    
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+    
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;
+    
     private String description;
     private String category;
+    
+    @Column(name = "expense_date")  // Add this mapping
     private LocalDate date;
+    
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status = Status.PENDING;
+    
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+    
     @Column(name = "approved_at")
     private LocalDateTime approvedAt;
+    
     @ManyToOne
     @JoinColumn(name = "approved_by")
     private User approvedBy;

@@ -1,3 +1,156 @@
+# spring:
+#   datasource:
+#     url: jdbc:oracle:thin:@localhost:1521:xe
+#     username: C##EXPENSE_USER
+#     password: "0660"
+#     driver-class-name: oracle.jdbc.OracleDriver
+#   jpa:
+#     hibernate:
+#       ddl-auto: update  # Changed from create to update
+#     database-platform: org.hibernate.dialect.Oracle12cDialect
+#     show-sql: true
+#   flyway:
+#     enabled: false
+
+# logging:
+#   level:
+#     org.hibernate.SQL: DEBUG
+#     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+#     com.zaxxer.hikari: DEBUG
+
+# jwt:
+#   secret: mySecretKey
+#   expiration: 86400000
+
+
+# spring:
+#   datasource:
+#     url: jdbc:oracle:thin:@localhost:1521:xe
+#     username: C##EXPENSE_USER
+#     password: "0660"
+#     driver-class-name: oracle.jdbc.OracleDriver
+#   jpa:
+#     hibernate:
+#       ddl-auto: validate  # Change from update to validate
+#     database-platform: org.hibernate.dialect.Oracle12cDialect
+#     show-sql: true
+#   flyway:
+#     enabled: true  # Enable Flyway
+#     locations: classpath:db/migration  # This is the correct path
+#     baseline-on-migrate: true
+#     baseline-version: 0
+#     baseline-description: "Initial baseline"
+
+# logging:
+#   level:
+#     org.hibernate.SQL: DEBUG
+#     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+#     com.zaxxer.hikari: DEBUG
+
+# jwt:
+#   secret: mySecretKey
+#   expiration: 86400000
+
+# spring:
+#   datasource:
+#     url: jdbc:oracle:thin:@localhost:1521:xe
+#     username: C##EXPENSE_USER
+#     password: "0660"
+#     driver-class-name: oracle.jdbc.OracleDriver
+#   jpa:
+#     hibernate:
+#       ddl-auto: create  # Change from validate to create
+#     database-platform: org.hibernate.dialect.OracleDialect  # Updated dialect
+#     show-sql: true
+#   flyway:
+#     enabled: false  # Temporarily disable Flyway
+#     # locations: classpath:db/migration
+#     # baseline-on-migrate: true
+#     # baseline-version: 0
+#     # baseline-description: "Initial baseline"
+
+# logging:
+#   level:
+#     org.hibernate.SQL: DEBUG
+#     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+#     com.zaxxer.hikari: DEBUG
+
+# jwt:
+#   secret: mySecretKey
+#   expiration: 86400000
+
+
+# spring:
+#   datasource:
+#     url: jdbc:oracle:thin:@localhost:1521:xe
+#     username: C##EXPENSE_USER
+#     password: "0660"
+#     driver-class-name: oracle.jdbc.OracleDriver
+#   jpa:
+#     hibernate:
+#       ddl-auto: update  # Use update instead of validate
+#     database-platform: org.hibernate.dialect.OracleDialect
+#     show-sql: true
+#   flyway:
+#     enabled: false
+
+# logging:
+#   level:
+#     org.hibernate.SQL: DEBUG
+
+# jwt:
+#   secret: mySecretKey
+#   expiration: 86400000
+
+# spring:
+#   datasource:
+#     url: jdbc:oracle:thin:@localhost:1521:xe
+#     username: C##EXPENSE_USER
+#     password: "0660"
+#     driver-class-name: oracle.jdbc.OracleDriver
+#   jpa:
+#     hibernate:
+#       ddl-auto: validate  # Change back to validate after Flyway creates tables
+#     database-platform: org.hibernate.dialect.OracleDialect
+#     show-sql: true
+#   flyway:
+#     enabled: true  # Enable Flyway
+#     locations: classpath:db/migration
+#     baseline-on-migrate: true
+#     baseline-version: 0
+#     baseline-description: "Initial baseline"
+
+# logging:
+#   level:
+#     org.hibernate.SQL: DEBUG
+
+# jwt:
+#   secret: mySecretKey
+#   expiration: 86400000
+
+# spring:
+#   datasource:
+#     url: jdbc:oracle:thin:@localhost:1521:xe
+#     username: C##EXPENSE_USER
+#     password: "0660"
+#     driver-class-name: oracle.jdbc.OracleDriver
+#   jpa:
+#     hibernate:
+#       ddl-auto: create  # Use create to rebuild everything
+#     database-platform: org.hibernate.dialect.OracleDialect
+#     show-sql: true
+#   flyway:
+#     enabled: false  # Disable Flyway temporarily
+
+# logging:
+#   level:
+#     org.hibernate.SQL: DEBUG
+
+# jwt:
+#   secret: mySecretKey
+#   expiration: 86400000
+
+
 spring:
   datasource:
     url: jdbc:oracle:thin:@localhost:1521:xe
@@ -6,17 +159,15 @@ spring:
     driver-class-name: oracle.jdbc.OracleDriver
   jpa:
     hibernate:
-      ddl-auto: update  # Changed from create to update
-    database-platform: org.hibernate.dialect.Oracle12cDialect
+      ddl-auto: update  # Let Hibernate manage schema
+    database-platform: org.hibernate.dialect.OracleDialect
     show-sql: true
   flyway:
-    enabled: false
+    enabled: false  # Keep Flyway disabled
 
 logging:
   level:
     org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-    com.zaxxer.hikari: DEBUG
 
 jwt:
   secret: mySecretKey
